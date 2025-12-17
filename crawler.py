@@ -3,7 +3,7 @@ from bs4 import BeautifulSoup
 
 print(f"Scanning {url} — found {len(videos)} videos")
 
-BASE_URL = "https://sites.google.com/lisarogers.org/songs-a-lot/song-sorting-stuff/albums/our-lady-peace/spiritual-machines"
+BASE_URL = "https://sites.google.com/lisarogers.org/songs-a-lot/home"
 
 from urllib.parse import urljoin
 
@@ -22,16 +22,19 @@ def extract_videos(url):
     r = requests.get(url)
     soup = BeautifulSoup(r.text, "html.parser")
     videos = []
-   for tag in soup.find_all(["iframe", "embed", "video"]):
-    src = tag.get("src") or tag.get("data-src")
-    if src and any(domain in src for domain in ["youtube.com", "vimeo.com", "drive.google.com"]):
-        videos.append((url, src))
+    for tag in soup.find_all(["iframe", "embed", "video"]):
+        src = tag.get("src") or tag.get("data-src")
+        if src and any(domain in src for domain in ["youtube.com", "vimeo.com", "drive.google.com"]):
+            videos.append((url, src))
     return videos
 
 all_links = get_page_links(BASE_URL)
 video_list = []
 for link in all_links:
     video_list.extend(extract_videos(link))
+
+print("Pages found:", all_links)
+print("Videos found:", video_list)
 
 if not video_list:
     html += "<p>No videos found. Check your Google Site or crawler settings.</p>"
