@@ -29,10 +29,37 @@ for link in all_links:
     video_list.extend(extract_videos(link))
 
 # Build HTML
-html = "<html><head><title>Video Index</title></head><body><h1>Video Index</h1><ul>"
+html = """
+<html>
+  <head>
+    <title>Video Index</title>
+    <style>
+      body { font-family: Arial; padding: 20px; }
+      h1 { text-align: center; }
+      .video-container { display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; }
+      .video-box { width: 300px; }
+      iframe { width: 100%; height: 170px; border: none; }
+      .source { font-size: 0.9em; color: #555; text-align: center; margin-top: 5px; }
+    </style>
+  </head>
+  <body>
+    <h1>Video Index</h1>
+    <div class="video-container">
+"""
+
 for page, video in video_list:
-    html += f"<li><a href='{video}' target='_blank'>{video}</a> (from {page})</li>"
-html += "</ul></body></html>"
+    html += f"""
+      <div class="video-box">
+        <iframe src="{video}" allowfullscreen></iframe>
+        <div class="source">From: <a href="{page}" target="_blank">{page}</a></div>
+      </div>
+    """
+
+html += """
+    </div>
+  </body>
+</html>
+"""
 
 with open("index.html", "w") as f:
     f.write(html)
