@@ -1,7 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
 
-BASE_URL = "https://sites.google.com/lisarogers.org/songs-a-lot/song-sorting-stuff/albums"
+BASE_URL = "https://sites.google.com/lisarogers.org/songs-a-lot/song-sorting-stuff/albums/our-lady-peace/spiritual-machines"
 
 def get_page_links(base_url):
     r = requests.get(base_url)
