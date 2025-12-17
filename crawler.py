@@ -3,7 +3,7 @@ from bs4 import BeautifulSoup
 
 print(f"Scanning {url} — found {len(videos)} videos")
 
-BASE_URL = "https://sites.google.com/lisarogers.org/songs-a-lot/song-sorting-stuff/albums/our-lady-peace/spiritual-machines"
+BASE_URL = "https://sites.google.com/lisarogers.org/songs-a-lot/home"
 
 from urllib.parse import urljoin
 
