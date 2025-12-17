@@ -1,7 +1,7 @@
-name: Run crawler
+name: Build and Deploy Video Index
 on:
   schedule:
-    - cron: '0 * * * *'   # runs every hour
+    - cron: '0 * * * *'   # every hour
   workflow_dispatch:      # manual trigger
 jobs:
   build:
@@ -16,3 +16,8 @@ jobs:
         run: pip install -r requirements.txt
       - name: Run crawler
         run: python crawler.py
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: .
