@@ -1,8 +1,6 @@
 import requests
 from bs4 import BeautifulSoup
 
-print(f"Scanning {url} — found {len(videos)} videos")
-
 BASE_URL = "https://sites.google.com/lisarogers.org/songs-a-lot/home"
 
 from urllib.parse import urljoin
@@ -16,6 +14,7 @@ def get_page_links(base_url):
         full_url = urljoin(base_url, href)
         if full_url.startswith(base_url):
             links.append(full_url)
+            print(f"Scanning {url} — found {len(videos)} videos")
     return list(set(links))
 
 def extract_videos(url):
