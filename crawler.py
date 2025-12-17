@@ -1,8 +1,6 @@
 import requests
 from bs4 import BeautifulSoup
 
-
-
 BASE_URL = "https://sites.google.com/lisarogers.org/songs-a-lot/home"
 
 from urllib.parse import urljoin
