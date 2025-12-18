@@ -75,3 +75,5 @@ html += """
 
 with open("index.html", "w") as f:
     f.write(html)
+    
+print("index.html written with", html.count("<iframe"), "videos")
