@@ -68,39 +68,3 @@ html += """
 
 with open("index.html", "w") as f:
     f.write(html)
-
-# Build HTML
-html = """
-<html>
-  <head>
-    <title>Video Index</title>
-    <style>
-      body { font-family: Arial; padding: 20px; }
-      h1 { text-align: center; }
-      .video-container { display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; }
-      .video-box { width: 300px; }
-      iframe { width: 100%; height: 170px; border: none; }
-      .source { font-size: 0.9em; color: #555; text-align: center; margin-top: 5px; }
-    </style>
-  </head>
-  <body>
-    <h1>Video Index</h1>
-    <div class="video-container">
-"""
-
-for page, video in video_list:
-    html += f"""
-      <div class="video-box">
-        <iframe src="{video}" allowfullscreen></iframe>
-        <div class="source">From: <a href="{page}" target="_blank">{page}</a></div>
-      </div>
-    """
-
-html += """
-    </div>
-  </body>
-</html>
-"""
-
-with open("index.html", "w") as f:
-    f.write(html)
