@@ -9,7 +9,8 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout
+        uses: actions/checkout@v3
 
       - name: Set up Python
         uses: actions/setup-python@v4
@@ -25,15 +26,12 @@ jobs:
       - name: Run crawler
         run: python crawler.py
 
-        - name: Check index.html content
-    run: |
-    if ! grep -q "<iframe" index.html; then
-      echo "No videos found — skipping deploy."
-      exit 1
-    fi
-
-    - name: Count embedded videos
-      run: grep -o "<iframe" index.html | wc -l
+      - name: Check index.html content
+        run: |
+          if ! grep -q "<iframe" index.html; then
+            echo "No videos found — skipping deploy."
+            exit 1
+          fi
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
