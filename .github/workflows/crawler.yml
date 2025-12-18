@@ -1,24 +1,32 @@
 name: Build and Deploy Video Index
+
 on:
   schedule:
     - cron: '0 * * * *'   # every hour
   workflow_dispatch:      # manual trigger
+
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
           python-version: '3.x'
+
       - name: Install dependencies
-        run: pip install -r requirements.txt
+        run: |
+          pip install -r requirements.txt
+          pip install playwright bs4
+          playwright install --with-deps
+
       - name: Run crawler
         run: python crawler.py
+
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           personal_token: ${{ secrets.GH_PAT }}
           publish_dir: .
-
