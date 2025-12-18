@@ -17,8 +17,8 @@ def extract_videos(page, url):
     page.goto(url)
     soup = BeautifulSoup(page.content(), "html.parser")
     videos = []
-    for tag in soup.find_all(["iframe", "embed", "video"]):
-        src = tag.get("src") or tag.get("data-src")
+    for tag in soup.find_all(["iframe", "embed", "video", "a"]):
+        src = tag.get("src") or tag.get("href") or tag.get("data-src")
         if src and any(domain in src for domain in [
             "youtube.com",
             "youtubeeducation.com",
@@ -35,8 +35,10 @@ with sync_playwright() as p:
     browser = p.chromium.launch()
     page = browser.new_page()
     all_links = get_page_links(page, BASE_URL)
+    print("Total pages scanned:", len(all_links))
     for link in all_links:
         video_list.extend(extract_videos(page, link))
+    print("Total videos found:", len(video_list))
     browser.close()
 
 # Build HTML
@@ -49,7 +51,7 @@ html = """
     .video-container { display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; }
     .video-box { width: 480px; }
     iframe { width: 100%; height: 270px; border: none; }
-    a { font-size: 0.9em; color: #555; text-align: center; margin-top: 5px; }
+    a { font-size: 0.9em; color: #555; text-align: center; margin-top: 5px; display: block; }
 </style>
 </head>
 <body>
