@@ -1,7 +1,7 @@
 from playwright.sync_api import sync_playwright
 from bs4 import BeautifulSoup
 
-BASE_URL = "https://sites.google.com/view/ngangs-lab/"
+BASE_URL = "https://sites.google.com/lisarogers.org/songs-a-lot/home"
 
 def get_page_links(page, base_url):
     page.goto(base_url)
