@@ -13,13 +13,18 @@ def get_page_links(page, base_url):
             links.append(href)
     return list(set(links))
 
-def extract_videos(page, url):
-    page.goto(url)
-    soup = BeautifulSoup(page.content(), "html.parser")
+def extract_videos(url):
+    r = requests.get(url)
+    soup = BeautifulSoup(r.text, "html.parser")
     videos = []
     for tag in soup.find_all(["iframe", "embed", "video"]):
         src = tag.get("src") or tag.get("data-src")
-        if src and any(domain in src for domain in ["youtube.com", "vimeo.com", "drive.google.com"]):
+        if src and any(domain in src for domain in [
+            "youtube.com",
+            "youtubeeducation.com",
+            "vimeo.com",
+            "drive.google.com"
+        ]):
             videos.append((url, src))
     print(f"Scanning {url} — found {len(videos)} videos")
     return videos
@@ -65,10 +70,6 @@ html += """
 </body>
 </html>
 """
-
-with open("index.html", "w") as f:
-    f.write(html)
-
 
 with open("index.html", "w") as f:
     f.write(html)
