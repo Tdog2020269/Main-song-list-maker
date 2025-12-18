@@ -68,3 +68,7 @@ html += """
 
 with open("index.html", "w") as f:
     f.write(html)
+
+
+with open("index.html", "w") as f:
+    f.write(html)
