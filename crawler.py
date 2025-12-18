@@ -13,9 +13,9 @@ def get_page_links(page, base_url):
             links.append(href)
     return list(set(links))
 
-def extract_videos(url):
-    r = requests.get(url)
-    soup = BeautifulSoup(r.text, "html.parser")
+def extract_videos(page, url):
+    page.goto(url)
+    soup = BeautifulSoup(page.content(), "html.parser")
     videos = []
     for tag in soup.find_all(["iframe", "embed", "video"]):
         src = tag.get("src") or tag.get("data-src")
@@ -57,11 +57,11 @@ html = """
 <div class="video-container">
 """
 
-for page, video in video_list:
+for page_url, video in video_list:
     html += f"""
     <div class="video-box">
         <iframe src="{video}" allowfullscreen></iframe>
-        <a href="{page}" target="_blank">{page}</a>
+        <a href="{page_url}" target="_blank">{page_url}</a>
     </div>
     """
 
@@ -70,10 +70,6 @@ html += """
 </body>
 </html>
 """
-
-with open("index.html", "w") as f:
-    f.write(html)
-
 
 with open("index.html", "w") as f:
     f.write(html)
